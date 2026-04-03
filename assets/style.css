@@ -58,7 +58,7 @@ img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
 .mmenu a:hover{color:var(--blue)}
 
 /* ═══ HERO ═══ */
-.hero{min-height:100vh;background:var(--blue);color:#fff;display:flex;align-items:center;padding:calc(var(--nav-h) + 40px) 0 80px;position:relative}
+.hero{min-height:100vh;background:var(--blue);color:#fff;display:flex;align-items:center;padding:calc(var(--nav-h) + 40px) 0 80px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-20%;right:-10%;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%);pointer-events:none}
 .hero-in{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 36px}
 .hero-tag{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.45);margin-bottom:44px;display:flex;align-items:center;gap:12px;opacity:0;animation:fu .8s var(--ease) .15s forwards}
@@ -74,7 +74,7 @@ img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
 @keyframes fu{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
 /* ═══ LOGOS — thin strip, not a full section ═══ */
-.logos-strip{background:var(--blue);padding:28px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,.06)}
+.logos-strip{background:var(--blue);padding:28px 0;overflow:hidden}
 .logos-track{display:flex;align-items:center;gap:56px;width:max-content;animation:ls 30s linear infinite}
 .logos-track img{height:22px;width:auto;opacity:.4;filter:brightness(0) invert(1);transition:opacity .3s}
 .logos-track img:hover{opacity:.8}
@@ -152,7 +152,10 @@ img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
   transition:border-color .3s,box-shadow .4s var(--ease);
 }
 .eng-card:hover{border-color:var(--blue);box-shadow:0 16px 48px var(--blue-glow)}
+a.eng-card{text-decoration:none;display:grid}
 .eng-card h3{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--text);margin-bottom:4px}
+.eng-link{font-size:1rem;opacity:.4;margin-left:8px;transition:opacity .3s,margin-left .3s}
+.eng-card:hover .eng-link{opacity:1;margin-left:12px}
 .eng-tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--blue);margin-bottom:8px}
 .eng-card p{font-size:.9rem;color:var(--text-soft);line-height:1.78}
 .eng-tech{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:.75rem;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:.04em}
@@ -248,10 +251,12 @@ footer{padding:34px 40px;background:var(--blue);color:rgba(255,255,255,.7);displ
   /* Projects swiper — full bleed */
   .proj-rows{display:none}
   .proj-swiper{display:block}
-  .proj-swiper-track{margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}
+  .proj-swiper-track{margin-left:-20px;margin-right:-20px;padding-left:0;padding-right:0}
+  .proj-swiper-track .pcard-m:first-child{margin-left:20px}
 
   /* Testimonials — full bleed swiper */
   .tst-grid{display:none}
   .tst-swiper{display:block}
-  .tst-swiper-track{margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}
+  .tst-swiper-track{margin-left:-20px;margin-right:-20px;padding-left:0;padding-right:0}
+  .tst-swiper-track .tst-c:first-child{margin-left:20px}
 }

@@ -38,12 +38,20 @@ window.addEventListener('load', initReveal);
 
 // Nav scroll
 const nav = document.querySelector('.nav');
-window.addEventListener('scroll', () => nav.classList.toggle('sc', scrollY > 40));
+if (nav) window.addEventListener('scroll', () => nav.classList.toggle('sc', scrollY > 40));
 
 // Mobile menu
-function tm() {
-  document.getElementById('burg').classList.toggle('on');
-  document.getElementById('mm').classList.toggle('on');
+const burg = document.getElementById('burg');
+const mm = document.getElementById('mm');
+if (burg && mm) {
+  burg.addEventListener('click', () => {
+    burg.classList.toggle('on');
+    mm.classList.toggle('on');
+  });
+  mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    burg.classList.remove('on');
+    mm.classList.remove('on');
+  }));
 }
 
 // Project row hover preview

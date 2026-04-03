@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imprint — built by charly</title>
+    <meta name="robots" content="noindex" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="assets/img/favicon.ico" sizes="any" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="assets/img/favicon-512.png"
+    />
+    <link rel="apple-touch-icon" href="assets/img/favicon-512.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Figtree:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <style>
+      .imprint {
+        padding: calc(var(--nav-h) + 80px) 0 120px;
+        max-width: 680px;
+        margin: 0 auto;
+        padding-left: 36px;
+        padding-right: 36px;
+      }
+      .imprint h1 {
+        font-family: var(--serif);
+        font-size: clamp(2.4rem, 5vw, 3.8rem);
+        font-weight: 300;
+        color: var(--text);
+        margin-bottom: 48px;
+      }
+      .imprint h1 em {
+        font-style: italic;
+        font-weight: 400;
+      }
+      .imprint h2 {
+        font-family: var(--serif);
+        font-size: 1.4rem;
+        font-weight: 500;
+        font-style: italic;
+        color: var(--text);
+        margin-top: 48px;
+        margin-bottom: 16px;
+      }
+      .imprint p {
+        font-size: 0.95rem;
+        color: var(--text-soft);
+        line-height: 1.8;
+        margin-bottom: 8px;
+      }
+      .imprint a {
+        color: var(--blue);
+        border-bottom: 1px solid var(--blue-pale);
+        transition: border-color 0.3s;
+      }
+      .imprint a:hover {
+        border-color: var(--blue);
+      }
+      .imprint hr {
+        border: none;
+        height: 1px;
+        background: var(--blue-pale);
+        margin: 48px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav sc">
+      <div class="nav-in">
+        <a href="/" class="nav-logo">
+          <span class="nav-logo-top">built by</span>
+          <span class="nav-logo-bot">charly</span>
+        </a>
+        <div class="nav-links">
+          <a href="/#skills">Skills</a>
+          <a href="/#work">Work</a>
+          <a href="/#about">About</a>
+          <a href="/#testimonials">Testimonials</a>
+          <a href="/#contact" class="nav-pill">Let's Talk</a>
+        </div>
+        <button class="burg" id="burg" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="mmenu" id="mm">
+      <a href="/#skills">Skills</a>
+      <a href="/#work">Work</a>
+      <a href="/#about">About</a>
+      <a href="/#testimonials">Testimonials</a>
+      <a href="/#contact">Contact</a>
+    </div>
+
+    <div class="imprint">
+      <h1><em>Imprint</em></h1>
+
+      <h2>Information according to § 5 TMG</h2>
+      <p>Charlotte Hetzler</p>
+      <p>Juergensallee 54</p>
+      <p>22609 Hamburg</p>
+      <p>Germany</p>
+
+      <h2>Contact</h2>
+      <p>
+        Email:
+        <a href="mailto:hello@builtbycharly.com">hello@builtbycharly.com</a>
+      </p>
+
+      <h2>Sales tax ID</h2>
+      <p>
+        Sales tax identification number according to § 27 a Umsatzsteuergesetz:
+        DE342076779
+      </p>
+
+      <hr />
+
+      <h2>Disclaimer</h2>
+      <p>
+        Despite careful control of the content, I assume no liability for the
+        content of external links. The operators of the linked pages are solely
+        responsible for their content.
+      </p>
+
+      <h2>Copyright</h2>
+      <p>
+        The content and works created on these pages are subject to German
+        copyright law. Duplication, processing, distribution, and any kind of
+        use beyond the limits of copyright law require written consent.
+      </p>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 built by charly &middot; Charlotte Hetzler</span>
+      <div class="ft-links">
+        <a href="https://www.linkedin.com/in/charlottehetzler/" target="_blank"
+          >LinkedIn</a
+        >
+        <a href="mailto:hello@builtbycharly.com">Email</a>
+        <a href="https://medium.com/@charlyhetzler" target="_blank">Blog</a>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu
+      const burg = document.getElementById("burg");
+      const mm = document.getElementById("mm");
+      if (burg && mm) {
+        burg.addEventListener("click", () => {
+          burg.classList.toggle("on");
+          mm.classList.toggle("on");
+        });
+        mm.querySelectorAll("a").forEach((a) =>
+          a.addEventListener("click", () => {
+            burg.classList.remove("on");
+            mm.classList.remove("on");
+          }),
+        );
+      }
+    </script>
+  </body>
+</html>
