@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>built by charly — Full-Stack Developer & Webflow Expert | Berlin & Sydney</title>
+<meta name="description" content="Charlotte Hetzler — full-stack developer and Webflow expert based in Berlin and Sydney. I build websites, applications, and automations properly, then hand them over so you can run them yourself.">
+<meta name="keywords" content="Webflow developer, full-stack developer, freelance developer Berlin, freelance developer Sydney, TypeScript, React, Node.js, process automation, AI integration, Webflow expert">
+<meta name="author" content="Charlotte Hetzler">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://builtbycharly.com">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="built by charly — I build things properly">
+<meta property="og:description" content="Full-stack developer & Webflow expert. Products, websites, and automations that work — and that you can run yourself.">
+<meta property="og:url" content="https://builtbycharly.com">
+<meta property="og:site_name" content="built by charly">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://builtbycharly.com/assets/img/og-image.jpg">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="built by charly — I build things properly">
+<meta name="twitter:description" content="Full-stack developer & Webflow expert. Products, websites, and automations that work — and that you can run yourself.">
+<meta name="twitter:image" content="https://builtbycharly.com/assets/img/og-image.jpg">
+
+<!-- Structured Data for SEO + AEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "name": "built by charly",
+      "url": "https://builtbycharly.com",
+      "description": "Full-stack development, Webflow websites, process automation, and AI integration. Based in Berlin and Sydney.",
+      "founder": {
+        "@type": "Person",
+        "name": "Charlotte Hetzler",
+        "alternateName": "Charly",
+        "jobTitle": "Full-Stack Developer & Webflow Expert",
+        "url": "https://builtbycharly.com",
+        "image": "https://builtbycharly.com/assets/img/charlotte-hetzler.webp",
+        "sameAs": [
+          "https://www.linkedin.com/in/charlottehetzler/",
+          "https://medium.com/@charlyhetzler",
+          "https://www.breathewithcharly.com/"
+        ],
+        "knowsAbout": ["Webflow", "TypeScript", "Node.js", "React", "Process Automation", "AI Integration", "Product Strategy"],
+        "worksFor": {"@type": "Organization", "name": "built by charly"}
+      },
+      "areaServed": [
+        {"@type": "City", "name": "Berlin", "containedInPlace": {"@type": "Country", "name": "Germany"}},
+        {"@type": "City", "name": "Sydney", "containedInPlace": {"@type": "Country", "name": "Australia"}}
+      ],
+      "serviceType": ["Web Development", "Webflow Development", "Full-Stack Development", "Process Automation", "AI Integration", "Product Strategy"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Development Services",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Webflow Development", "description": "Pixel-perfect responsive websites with CMS designed for client handoff"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Full-Stack Engineering", "description": "Applications in TypeScript, Node.js, and React with clean architecture and documentation"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Automation & AI", "description": "Workflow automation using Google Scripts, Zapier, n8n, and custom AI integrations"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Strategy & Product", "description": "Business-minded approach to digital product development"}}
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "name": "built by charly",
+      "url": "https://builtbycharly.com"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What services does built by charly offer?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Webflow development, full-stack software engineering (TypeScript, Node.js, React), process automation and AI integration, and product strategy consulting. Every project includes thorough documentation and handoff so clients can maintain their product independently."}
+        },
+        {
+          "@type": "Question",
+          "name": "Where is built by charly based?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Charlotte Hetzler works across Berlin, Germany and Sydney, Australia, serving clients internationally."}
+        },
+        {
+          "@type": "Question",
+          "name": "What makes built by charly different from other developers?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The key differentiator is the handoff principle: every project is built with the explicit goal of making the client self-sufficient. Clean documentation, thorough walkthroughs, and CMS architecture designed so teams can manage their own content without ongoing developer dependency."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-top">built by</span>
+      <span class="nav-logo-bot">charly</span>
+    </a>
+    <div class="nav-links">
+      <a href="#skills">Skills</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact" class="nav-pill">Let's Talk</a>
+    </div>
+    <button class="burg" id="burg" onclick="tm()" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mmenu" id="mm">
+  <a href="#skills" onclick="tm()">Skills</a>
+  <a href="#work" onclick="tm()">Work</a>
+  <a href="#about" onclick="tm()">About</a>
+  <a href="#testimonials" onclick="tm()">Testimonials</a>
+  <a href="#contact" onclick="tm()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-in">
+    <div class="hero-tag">Full-Stack Developer & Webflow Expert</div>
+    <h1>I build things <em>properly,</em> and leave you able to run them</h1>
+    <p class="hero-p">Products, websites, and automations that actually work — and that you'll understand long after I've moved on.</p>
+    <div class="hero-btns">
+      <a href="mailto:hello@builtbycharly.com" class="btn btn-w">Start a conversation →</a>
+      <a href="#work" class="btn btn-g">See the work</a>
+    </div>
+    <div class="hero-loc">Berlin & Sydney — available everywhere</div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-strip">
+  <div class="logos-track">
+    <img src="assets/img/logos/porsche.png" alt="Porsche Digital">
+    <img src="assets/img/logos/ceezer.png" alt="CEEZER">
+    <img src="assets/img/logos/n8n.png" alt="n8n">
+    <img src="assets/img/logos/setting.png" alt="Setting">
+    <img src="assets/img/logos/lap.png" alt="LAP">
+    <img src="assets/img/logos/conlio.png" alt="Conlio">
+    <img src="assets/img/logos/caronsale.png" alt="CarOnSale">
+    <img src="assets/img/logos/sonic.png" alt="Sonic">
+    <img src="assets/img/logos/lewagon.png" alt="Le Wagon">
+    <img src="assets/img/logos/parametrix.png" alt="Parametrix">
+    <img src="assets/img/logos/tinkenergy.png" alt="tink.energy">
+    <img src="assets/img/logos/wearr.png" alt="Wearr">
+    <img src="assets/img/logos/myos.png" alt="Myos">
+    <img src="assets/img/logos/haufe.png" alt="Haufe">
+    <img src="assets/img/logos/altitude.png" alt="Altitude">
+    <img src="assets/img/logos/codum.png" alt="Codum">
+    <!-- duplicate set for seamless scroll -->
+    <img src="assets/img/logos/porsche.png" alt="Porsche Digital">
+    <img src="assets/img/logos/ceezer.png" alt="CEEZER">
+    <img src="assets/img/logos/n8n.png" alt="n8n">
+    <img src="assets/img/logos/setting.png" alt="Setting">
+    <img src="assets/img/logos/lap.png" alt="LAP">
+    <img src="assets/img/logos/conlio.png" alt="Conlio">
+    <img src="assets/img/logos/caronsale.png" alt="CarOnSale">
+    <img src="assets/img/logos/sonic.png" alt="Sonic">
+    <img src="assets/img/logos/lewagon.png" alt="Le Wagon">
+    <img src="assets/img/logos/parametrix.png" alt="Parametrix">
+    <img src="assets/img/logos/tinkenergy.png" alt="tink.energy">
+    <img src="assets/img/logos/wearr.png" alt="Wearr">
+    <img src="assets/img/logos/myos.png" alt="Myos">
+    <img src="assets/img/logos/haufe.png" alt="Haufe">
+    <img src="assets/img/logos/altitude.png" alt="Altitude">
+    <img src="assets/img/logos/codum.png" alt="Codum">
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills" class="skills">
+  <div class="w">
+    <div data-r>
+      <div class="sl">What I do</div>
+      <h2 class="sh">Four things, done <em>properly</em></h2>
+    </div>
+    <div class="sk-grid" data-r>
+      <div class="sk-card">
+        <h3>Webflow</h3>
+        <p>Pixel-perfect, responsive sites where the CMS is designed with your team in mind. Every site I build gets handed over with documentation — you'll be updating content on day one, no developer needed.</p>
+      </div>
+      <div class="sk-card">
+        <h3>Engineering</h3>
+        <p>Full-stack applications in TypeScript, Node.js, and React. Clean architecture and thorough documentation so the next developer — or you — can pick it up and run.</p>
+      </div>
+      <div class="sk-card">
+        <h3>Automation & AI</h3>
+        <p>Google Scripts, Zapier, n8n, custom AI integrations. Workflows that save your team hours every week and keep working long after I've set them up.</p>
+      </div>
+      <div class="sk-card">
+        <h3>Strategy & Product</h3>
+        <p>A business degree and years with startups means I question the brief, not just execute it. I'll flag what doesn't serve your goals before we build the wrong thing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEBFLOW PROJECTS -->
+<section id="work" class="proj-sec">
+  <div class="w">
+    <div class="proj-intro" data-r>
+      <div class="sl" style="color:rgba(255,255,255,.35)">Selected work</div>
+      <h2 class="sh" style="color:#fff">Webflow <em style="color:var(--blue-pale)">projects</em></h2>
+    </div>
+    <div class="proj-rows" data-r>
+      <a href="https://www.parametrixinsurance.com/" target="_blank" class="proj-row" data-img="assets/img/projects/parametrix.jpg">
+        <span class="proj-row-left">Insurance Tech</span><span class="proj-row-center">Parametrix</span><span class="proj-row-right">View ↗</span>
+      </a>
+      <a href="https://www.tinkenergy.de/" target="_blank" class="proj-row" data-img="assets/img/projects/tinkenergy.png">
+        <span class="proj-row-left">Renewable Energy</span><span class="proj-row-center">tink.energy</span><span class="proj-row-right">View ↗</span>
+      </a>
+      <a href="https://setting.io/" target="_blank" class="proj-row" data-img="assets/img/projects/setting.jpg">
+        <span class="proj-row-left">Flex Office</span><span class="proj-row-center">Setting HQ</span><span class="proj-row-right">View ↗</span>
+      </a>
+      <a href="https://www.conlio.com/" target="_blank" class="proj-row" data-img="assets/img/projects/conlio.jpg">
+        <span class="proj-row-left">Supply Chain SaaS</span><span class="proj-row-center">Conlio</span><span class="proj-row-right">View ↗</span>
+      </a>
+      <a href="https://www.brightside-studio.de/" target="_blank" class="proj-row" data-img="assets/img/projects/brightside.png">
+        <span class="proj-row-left">Design Studio</span><span class="proj-row-center">Brightside</span><span class="proj-row-right">View ↗</span>
+      </a>
+    </div>
+    <!-- Mobile swiper -->
+    <div class="proj-swiper"><div class="proj-swiper-track" id="pst">
+      <a href="https://www.parametrixinsurance.com/" target="_blank" class="pcard-m"><div class="pcard-m-img"><img src="assets/img/projects/parametrix.jpg" alt="Parametrix" loading="lazy"></div><div class="pcard-m-body"><div class="pcard-m-tag">Insurance Tech</div><h3>Parametrix</h3><p>Rebuilt for international scale.</p></div></a>
+      <a href="https://www.tinkenergy.de/" target="_blank" class="pcard-m"><div class="pcard-m-img"><img src="assets/img/projects/tinkenergy.png" alt="tink.energy" loading="lazy"></div><div class="pcard-m-body"><div class="pcard-m-tag">Renewable Energy</div><h3>tink.energy</h3><p>Smart home showcases.</p></div></a>
+      <a href="https://setting.io/" target="_blank" class="pcard-m"><div class="pcard-m-img"><img src="assets/img/projects/setting.jpg" alt="Setting HQ" loading="lazy"></div><div class="pcard-m-body"><div class="pcard-m-tag">Flex Office</div><h3>Setting HQ</h3><p>Subscription offices, Europe-wide.</p></div></a>
+      <a href="https://www.conlio.com/" target="_blank" class="pcard-m"><div class="pcard-m-img"><img src="assets/img/projects/conlio.jpg" alt="Conlio" loading="lazy"></div><div class="pcard-m-body"><div class="pcard-m-tag">Supply Chain</div><h3>Conlio</h3><p>Freight invoicing, clarified.</p></div></a>
+      <a href="https://www.brightside-studio.de/" target="_blank" class="pcard-m"><div class="pcard-m-img"><img src="assets/img/projects/brightside.png" alt="Brightside" loading="lazy"></div><div class="pcard-m-body"><div class="pcard-m-tag">Design Studio</div><h3>Brightside</h3><p>Pixel-perfect Webflow build.</p></div></a>
+    </div></div>
+  </div>
+</section>
+<div class="proj-preview" id="projPreview"><img id="projPreviewImg" src="" alt=""></div>
+
+<!-- ENGINEERING -->
+<section class="eng">
+  <div class="w">
+    <div data-r>
+      <div class="sl">Engineering</div>
+      <h2 class="sh">Beyond the <em>frontend</em></h2>
+    </div>
+    <div class="eng-cards">
+      <div class="eng-card" data-r>
+        <div>
+          <div class="eng-tag">Platform · Carbon Offsetting</div>
+          <h3>Carbon Beasts</h3>
+          <div class="eng-tech"><span>Full-Stack</span><span>Dashboard</span><span>API</span></div>
+        </div>
+        <p>A platform for event organizers to calculate and offset their carbon emissions. Built the full-stack application including the dashboard, calculation engine, and integrations. Making sustainability actionable, not aspirational.</p>
+      </div>
+      <div class="eng-card" data-r class="d1">
+        <div>
+          <div class="eng-tag">Mobile App · Loyalty & Payments</div>
+          <h3>LAP Coffee</h3>
+          <div class="eng-tech"><span>React Native</span><span>Node.js</span><span>Payments</span></div>
+        </div>
+        <p>LAP Coffee runs micro-sized hubs across Berlin with the ambition to become a daily go-to. Their Apple Wallet stamp card couldn't scale. We built a custom mobile app — reward points, payments, and a social feature where customers send gifts to each other.</p>
+      </div>
+      <div class="eng-card" data-r class="d2">
+        <div>
+          <div class="eng-tag">Full-Stack · Carbon Marketplace</div>
+          <h3>CEEZER</h3>
+          <div class="eng-tech"><span>TypeScript</span><span>Node.js</span><span>React</span></div>
+        </div>
+        <p>Built a carbon credit marketplace from the ground up. Engineered the architecture so their growing dev team could take ownership and extend it independently. They're still building on the foundation.</p>
+      </div>
+      <div class="eng-card" data-r class="d3">
+        <div>
+          <div class="eng-tag">Platform · Freight Automation</div>
+          <h3>Conlio</h3>
+          <div class="eng-tech"><span>Full-Stack</span><span>Automation</span><span>SaaS</span></div>
+        </div>
+        <p>Beyond the Webflow marketing site, we built a platform to automate a critical step in freight invoicing. Turning a manual, error-prone workflow into something reliable and fast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="abt">
+  <div class="w">
+    <div data-r><div class="sl">A note from Charly</div></div>
+    <div class="abt-grid">
+      <div class="abt-vis" data-r>
+        <div class="abt-ph"><img src="assets/img/charlotte-hetzler.webp" alt="Charlotte Hetzler"></div>
+      </div>
+      <div class="abt-txt">
+        <h2 data-r><em>Why I build</em> the way I do</h2>
+        <div data-r class="d1"><p>I spent years studying business before I ever wrote a line of code. And honestly, that late start turned out to be the best thing that happened to me — because by the time I learned to build, I already understood <em>why</em> things get built. The strategy. The user. The business case behind every feature request.</p></div>
+        <div data-r class="d2"><p>Five years in, I've worked with startups across Berlin and Sydney. Carbon marketplaces, insurance platforms, coffee apps, freight automation. Every project is different, but my approach stays the same: <strong>build it properly, document it clearly, and hand it over so you can run it without me.</strong></p></div>
+        <div data-r class="d3"><p>That last part is the one most developers skip. They build something great and then disappear — leaving you dependent on them for every small change. I do the opposite. I actively work toward the moment where you say "I've got it from here." That's not me losing a client. That's me doing my job.</p></div>
+        <div data-r class="d4"><p>When I'm not building, I mentor aspiring developers and run <a href="https://www.breathewithcharly.com/" target="_blank">breathwork sessions</a>. It might seem unrelated, but it's the same instinct — helping people find clarity, then getting out of the way so they can move on their own.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="tst">
+  <div class="w">
+    <div data-r>
+      <div class="sl" style="color:rgba(255,255,255,.35)">Testimonials</div>
+      <h2 class="sh" style="color:#fff">From the people<br><em style="color:var(--blue-pale)">I've worked with</em></h2>
+    </div>
+    <div class="tst-grid" data-r>
+      <div class="tst-c">
+        <div class="tst-label">On referrals</div>
+        <div class="tst-q">"</div>
+        <blockquote>'Do you know anyone who can implement Webflow pages quickly and reliably?' — my answer is always the same: Charly. She delivers clean, fast code, thinks proactively, and asks the right questions.</blockquote>
+        <div class="tst-who"><strong>Juli D.</strong><span>Co-Founder @ doubledown studio</span></div>
+      </div>
+      <div class="tst-c">
+        <div class="tst-label">On technical skill</div>
+        <div class="tst-q">"</div>
+        <blockquote>Charly was instrumental in building the application from the ground up. Her expertise in TypeScript, Node.js, and React was crucial to the success of the project.</blockquote>
+        <div class="tst-who"><strong>Felipe B.</strong><span>VP Tech @ CEEZER</span></div>
+      </div>
+      <div class="tst-c">
+        <div class="tst-label">On the process</div>
+        <div class="tst-q">"</div>
+        <blockquote>She guided me through the entire website development process with clarity and care, delivered amazing results quickly. By the end, it felt like I was working with a friend.</blockquote>
+        <div class="tst-who"><strong>Tessa C.</strong><span>Marketing & Comms @ Parametrix</span></div>
+      </div>
+      <div class="tst-c">
+        <div class="tst-label">On the combination</div>
+        <div class="tst-q">"</div>
+        <blockquote>She combines an economical background with sharp full-stack developer skills. This combination plus always being up to date regarding AI-automation development makes her unique in this space.</blockquote>
+        <div class="tst-who"><strong>Julius W.</strong><span>Sr Performance Marketing @ CarOnSale</span></div>
+      </div>
+    </div>
+    <!-- Mobile swiper -->
+    <div class="tst-swiper" data-r>
+      <div class="tst-swiper-track" id="tstTrack">
+        <div class="tst-c"><div class="tst-q">"</div><blockquote>'Do you know anyone who can implement Webflow pages quickly?' — my answer is always: Charly. Clean, fast code. Proactive. Right questions.</blockquote><div class="tst-who"><strong>Juli D.</strong><span>Co-Founder @ doubledown studio</span></div></div>
+        <div class="tst-c"><div class="tst-q">"</div><blockquote>Instrumental in building the application from the ground up. Her expertise in TypeScript, Node.js, and React was crucial.</blockquote><div class="tst-who"><strong>Felipe B.</strong><span>VP Tech @ CEEZER</span></div></div>
+        <div class="tst-c"><div class="tst-q">"</div><blockquote>She guided me through the entire process with clarity and care. By the end, it felt like working with a friend.</blockquote><div class="tst-who"><strong>Tessa C.</strong><span>Marketing @ Parametrix</span></div></div>
+        <div class="tst-c"><div class="tst-q">"</div><blockquote>Economical background plus sharp dev skills plus AI-automation expertise makes her unique in this space.</blockquote><div class="tst-who"><strong>Julius W.</strong><span>Sr Marketing @ CarOnSale</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta">
+  <div class="cta-in" data-r>
+    <h2>Let's build something you'll be proud to <em>run yourself</em></h2>
+    <p>I take on a handful of projects at a time. Project-based, typically 2–8 weeks. If you're building something meaningful and want it done properly, I'd love to hear about it.</p>
+    <div class="cta-avail">Currently available for Q3 2025</div><br>
+    <a href="mailto:hello@builtbycharly.com" class="cta-mail">hello@builtbycharly.com →</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 built by charly · Charlotte Hetzler</span>
+  <div class="ft-links">
+    <a href="https://www.linkedin.com/in/charlottehetzler/" target="_blank">LinkedIn</a>
+    <a href="mailto:hello@builtbycharly.com">Email</a>
+    <a href="https://medium.com/@charlyhetzler" target="_blank">Blog</a>
+    <a href="https://www.breathewithcharly.com/" target="_blank">Breathwork</a>
+    <a href="https://www.charlottehetzler.com/imprint" target="_blank">Imprint</a>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
