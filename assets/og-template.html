@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>OG Image Template - Screenshot this!</title>
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600&f[]=satoshi@400,500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ═══ OG IMAGE: 1200x630 ═══ */
+      .og-image {
+        width: 1200px;
+        height: 630px;
+        background: #145f4b;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 80px 100px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .og-image::before {
+        content: "";
+        position: absolute;
+        top: -200px;
+        right: -200px;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(146, 160, 255, 0.15) 0%,
+          transparent 70%
+        );
+      }
+
+      .og-image::after {
+        content: "";
+        position: absolute;
+        bottom: -100px;
+        left: -100px;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(146, 160, 255, 0.1) 0%,
+          transparent 70%
+        );
+      }
+
+      .og-logo {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 32px;
+      }
+
+      .og-logo-prefix {
+        font-family: "Satoshi", sans-serif;
+        font-size: 28px;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(248, 249, 252, 0.7);
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .og-logo-name {
+        font-family: "Clash Display", sans-serif;
+        font-size: 120px;
+        font-weight: 500;
+        color: #f8f9fc;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      .og-logo-dot {
+        color: #92a0ff;
+      }
+
+      .og-tagline {
+        font-family: "Satoshi", sans-serif;
+        font-size: 32px;
+        font-weight: 400;
+        color: rgba(248, 249, 252, 0.7);
+        line-height: 1.5;
+        max-width: 700px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .og-tagline em {
+        font-style: normal;
+        color: #b3bdff;
+      }
+
+      .og-url {
+        position: absolute;
+        bottom: 60px;
+        left: 100px;
+        font-family: "Clash Display", sans-serif;
+        font-size: 24px;
+        font-weight: 500;
+        color: #92a0ff;
+        letter-spacing: 0.02em;
+      }
+
+      /* ═══ LINKEDIN BANNER: 1584x396 ═══ */
+      .linkedin-banner {
+        width: 1584px;
+        height: 396px;
+        background: #145f4b;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 120px;
+        position: relative;
+        overflow: hidden;
+        margin-top: 60px;
+      }
+
+      .linkedin-banner::before {
+        content: "";
+        position: absolute;
+        top: -150px;
+        left: -100px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(146, 160, 255, 0.12) 0%,
+          transparent 70%
+        );
+      }
+
+      .linkedin-content {
+        position: relative;
+        z-index: 1;
+        text-align: right;
+      }
+
+      .linkedin-logo-prefix {
+        font-family: "Satoshi", sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(248, 249, 252, 0.7);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .linkedin-name {
+        font-family: "Clash Display", sans-serif;
+        font-size: 72px;
+        font-weight: 500;
+        color: #f8f9fc;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        margin-bottom: 16px;
+      }
+
+      .linkedin-dot {
+        color: #92a0ff;
+      }
+
+      .linkedin-tagline {
+        font-family: "Satoshi", sans-serif;
+        font-size: 24px;
+        color: rgba(248, 249, 252, 0.65);
+      }
+
+      .linkedin-tagline em {
+        font-style: normal;
+        color: #b3bdff;
+      }
+
+      .linkedin-accent {
+        position: absolute;
+        left: 120px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 200px;
+        height: 200px;
+        background: #92a0ff;
+        border-radius: 50%;
+        opacity: 0.15;
+      }
+
+      /* Instructions */
+      .instructions {
+        background: #1a1a2e;
+        color: #fff;
+        padding: 40px;
+        font-family: system-ui, sans-serif;
+        margin-bottom: 40px;
+      }
+
+      .instructions h1 {
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+
+      .instructions p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 12px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .instructions code {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+
+      h2.section-title {
+        font-family: system-ui, sans-serif;
+        font-size: 18px;
+        color: #333;
+        margin: 40px 0 20px;
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="instructions">
+      <h1>Brand Asset Templates</h1>
+      <p>
+        <strong>How to use:</strong> Open this file in Chrome, zoom to 100%, and
+        use a screenshot tool to capture each template at exact dimensions.
+      </p>
+      <p>
+        <strong>OG Image:</strong> <code>1200 x 630px</code> - Save as
+        <code>og-image.png</code>
+      </p>
+      <p>
+        <strong>LinkedIn Banner:</strong> <code>1584 x 396px</code> - Save as
+        <code>linkedin-banner.png</code>
+      </p>
+      <p>
+        <strong>Tip:</strong> On Mac, use Cmd+Shift+4 then Space to capture a
+        specific element, or use browser DevTools to screenshot at exact
+        dimensions.
+      </p>
+    </div>
+
+    <h2 class="section-title">OG Image (1200 x 630)</h2>
+    <div class="og-image">
+      <div class="og-logo">
+        <span class="og-logo-prefix">built by</span>
+        <span class="og-logo-name">charly<span class="og-logo-dot">.</span></span>
+      </div>
+      <div class="og-tagline">
+        Software Engineer & Webflow Expert<br />
+        <em>building things that work.</em>
+      </div>
+      <div class="og-url">builtbycharly.com</div>
+    </div>
+
+    <h2 class="section-title">LinkedIn Banner (1584 x 396)</h2>
+    <div class="linkedin-banner">
+      <div class="linkedin-content">
+        <span class="linkedin-logo-prefix">built by</span>
+        <div class="linkedin-name">charly<span class="linkedin-dot">.</span></div>
+        <div class="linkedin-tagline">
+          Software Engineer & Webflow Expert
+        </div>
+      </div>
+      <div class="linkedin-accent"></div>
+    </div>
+  </body>
+</html>
