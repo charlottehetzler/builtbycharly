@@ -877,7 +877,7 @@ a {
 }
 
 /* ═══════════════════════════════════════
-   RESPONSIVE — Always horizontal, adapted layouts
+   RESPONSIVE — Vertical scroll with snap on mobile
    ═══════════════════════════════════════ */
 @media (max-width: 1200px) {
   .projects-grid {
@@ -886,6 +886,56 @@ a {
 }
 
 @media (max-width: 900px) {
+  /* Convert to vertical scroll with snap */
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
+  .horizontal-wrapper {
+    overflow: visible;
+  }
+
+  .horizontal-track {
+    display: block;
+    width: 100%;
+  }
+
+  .panel {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Magnetic parallax - layered depth effect */
+  .panel {
+    perspective: 1000px;
+  }
+
+  .panel-content {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+  }
+
+  /* Parallax layers within panels */
+  .parallax-layer {
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+  }
+
+  .parallax-layer-deep {
+    transform: translateZ(-50px);
+  }
+
+  .parallax-layer-mid {
+    transform: translateZ(0px);
+  }
+
+  .parallax-layer-front {
+    transform: translateZ(30px);
+  }
+
   .panel-content {
     padding: 0 24px;
     width: 100%;
@@ -950,6 +1000,16 @@ a {
     transform: translateX(-50%);
   }
 
+  .scroll-hint svg {
+    transform: rotate(90deg);
+    animation: bounceDown 1.5s var(--ease) infinite;
+  }
+
+  @keyframes bounceDown {
+    0%, 100% { transform: rotate(90deg) translateX(0); }
+    50% { transform: rotate(90deg) translateX(6px); }
+  }
+
   /* Philosophy - MUCH bigger font, full height */
   .panel-philosophy .panel-content {
     display: flex;
@@ -974,19 +1034,30 @@ a {
     font-size: 2.5rem;
   }
 
-  /* Projects on mobile */
+  /* Projects on mobile - vertical stack */
   .panel-work,
   .panel-webflow {
-    padding: 0 24px;
+    padding: 60px 24px;
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    min-height: 100vh;
   }
 
   .panel-work .work-header,
   .panel-webflow .work-header {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+  }
+
+  .projects-grid,
+  .webflow-grid {
+    flex-direction: column;
+    gap: 16px;
   }
 
   .project-card {
-    width: 240px;
+    width: 100%;
+    max-width: 100%;
   }
 
   /* Brands grid mobile */
@@ -1000,7 +1071,8 @@ a {
 
   /* Webflow grid mobile */
   .webflow-card {
-    width: 260px;
+    width: 100%;
+    max-width: 100%;
   }
 
   /* Swiper/Deck testimonials on mobile */
@@ -1129,11 +1201,11 @@ a {
   }
 
   .project-card {
-    width: 220px;
+    width: 100%;
   }
 
   .webflow-card {
-    width: 220px;
+    width: 100%;
   }
 
   .chapter h2 {
@@ -1210,11 +1282,11 @@ a {
   }
 
   .project-card {
-    width: 200px;
+    width: 100%;
   }
 
   .webflow-card {
-    width: 200px;
+    width: 100%;
   }
 
   .scroll-hint {

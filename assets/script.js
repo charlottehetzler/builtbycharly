@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════
-   BUILT BY CHARLY — Horizontal Scroll Experience
+   BUILT BY CHARLY — Portfolio Experience
+   Desktop: Horizontal Scroll
+   Mobile: Vertical Snap + Magnetic Parallax
    GSAP + ScrollTrigger magic
-   Warm & Earthy Edition
    ═══════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -77,12 +78,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!nav) return;
     const darkPanels = document.querySelectorAll('.panel-hero, .panel-work, .panel-contact');
     let onDark = false;
+    const isMobileNav = window.innerWidth <= 900;
 
     darkPanels.forEach(panel => {
       const rect = panel.getBoundingClientRect();
-      // Check if dark panel is currently in view (horizontal scroll)
-      if (rect.left < 200 && rect.right > 0) {
-        onDark = true;
+      if (isMobileNav) {
+        // Mobile: Check vertical position (panel top is near viewport top)
+        if (rect.top <= 100 && rect.bottom > 100) {
+          onDark = true;
+        }
+      } else {
+        // Desktop: Check horizontal position
+        if (rect.left < 200 && rect.right > 0) {
+          onDark = true;
+        }
       }
     });
 
@@ -92,45 +101,167 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial nav color check
   updateNavColor();
 
-  // ═══ HORIZONTAL SCROLL ═══
+  // ═══ HORIZONTAL SCROLL (Desktop only) ═══
   const wrapper = document.querySelector('.horizontal-wrapper');
   const track = document.querySelector('.horizontal-track');
   const panels = document.querySelectorAll('.panel');
+  const isMobileView = window.innerWidth <= 900;
 
   if (!wrapper || !track || panels.length === 0) return;
 
-  const getTotalWidth = () => {
-    let width = 0;
-    panels.forEach(panel => width += panel.offsetWidth);
-    return width;
-  };
+  let horizontalScroll = null;
 
-  const horizontalScroll = gsap.to(track, {
-    x: () => -(getTotalWidth() - window.innerWidth),
-    ease: 'none',
-    scrollTrigger: {
-      trigger: wrapper,
-      start: 'top top',
-      end: () => '+=' + (getTotalWidth() - window.innerWidth),
-      pin: true,
-      scrub: 1,
-      invalidateOnRefresh: true,
-      anticipatePin: 1,
-      onUpdate: updateNavColor
-    }
-  });
+  if (!isMobileView) {
+    // Desktop: Horizontal scroll
+    const getTotalWidth = () => {
+      let width = 0;
+      panels.forEach(panel => width += panel.offsetWidth);
+      return width;
+    };
 
-  // Progress bar
-  const progressBar = document.querySelector('.progress-bar');
-  if (progressBar) {
-    ScrollTrigger.create({
-      trigger: wrapper,
-      start: 'top top',
-      end: () => '+=' + (getTotalWidth() - window.innerWidth),
-      onUpdate: (self) => {
-        gsap.set(progressBar, { width: (self.progress * 100) + '%' });
+    horizontalScroll = gsap.to(track, {
+      x: () => -(getTotalWidth() - window.innerWidth),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: wrapper,
+        start: 'top top',
+        end: () => '+=' + (getTotalWidth() - window.innerWidth),
+        pin: true,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+        onUpdate: updateNavColor
       }
     });
+
+    // Progress bar (desktop)
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+      ScrollTrigger.create({
+        trigger: wrapper,
+        start: 'top top',
+        end: () => '+=' + (getTotalWidth() - window.innerWidth),
+        onUpdate: (self) => {
+          gsap.set(progressBar, { width: (self.progress * 100) + '%' });
+        }
+      });
+    }
+  } else {
+    // Mobile: Vertical scroll with magnetic parallax
+
+    // Progress bar (mobile - based on scroll position)
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollTop / docHeight;
+        gsap.set(progressBar, { width: (progress * 100) + '%' });
+      }, { passive: true });
+    }
+
+    // Update nav color on scroll for mobile
+    window.addEventListener('scroll', updateNavColor, { passive: true });
+
+    // ═══ MAGNETIC PARALLAX (Touch + Gyroscope) ═══
+    let currentPanel = null;
+    let tiltX = 0, tiltY = 0;
+    let touchX = 0.5, touchY = 0.5; // Normalized 0-1
+
+    // Find which panel is currently in view
+    const updateCurrentPanel = () => {
+      panels.forEach(panel => {
+        const rect = panel.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.5) {
+          currentPanel = panel;
+        }
+      });
+    };
+
+    window.addEventListener('scroll', updateCurrentPanel, { passive: true });
+    updateCurrentPanel();
+
+    // Apply tilt effect to current panel
+    const applyTilt = () => {
+      if (!currentPanel) return;
+
+      const content = currentPanel.querySelector('.panel-content');
+      if (!content) return;
+
+      // Combine touch and gyro inputs
+      const maxTilt = 8; // degrees
+      const rotateX = (touchY - 0.5) * maxTilt + tiltY;
+      const rotateY = (touchX - 0.5) * -maxTilt + tiltX;
+
+      gsap.to(content, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+
+      // Move child elements at different depths
+      const deepElements = currentPanel.querySelectorAll('h2, .hero-name, .philosophy-text');
+      const midElements = currentPanel.querySelectorAll('p, .chapter, .testimonial');
+      const frontElements = currentPanel.querySelectorAll('img, .project-card, .webflow-card, .contact-email');
+
+      const moveAmount = 15;
+
+      deepElements.forEach(el => {
+        gsap.to(el, {
+          x: (touchX - 0.5) * moveAmount * 0.5,
+          y: (touchY - 0.5) * moveAmount * 0.5,
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      });
+
+      midElements.forEach(el => {
+        gsap.to(el, {
+          x: (touchX - 0.5) * moveAmount,
+          y: (touchY - 0.5) * moveAmount,
+          duration: 0.35,
+          ease: 'power2.out'
+        });
+      });
+
+      frontElements.forEach(el => {
+        gsap.to(el, {
+          x: (touchX - 0.5) * moveAmount * 1.8,
+          y: (touchY - 0.5) * moveAmount * 1.8,
+          duration: 0.25,
+          ease: 'power2.out'
+        });
+      });
+    };
+
+    // Touch tracking
+    document.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      touchX = touch.clientX / window.innerWidth;
+      touchY = touch.clientY / window.innerHeight;
+      applyTilt();
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => {
+      // Smoothly reset to center
+      touchX = 0.5;
+      touchY = 0.5;
+      applyTilt();
+    }, { passive: true });
+
+    // Gyroscope/Device orientation (if available)
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', (e) => {
+        if (e.gamma !== null && e.beta !== null) {
+          // gamma: left-right tilt (-90 to 90)
+          // beta: front-back tilt (-180 to 180)
+          tiltX = Math.max(-15, Math.min(15, e.gamma)) / 15 * 5;
+          tiltY = Math.max(-15, Math.min(15, e.beta - 45)) / 15 * 5; // -45 for natural holding angle
+          applyTilt();
+        }
+      }, { passive: true });
+    }
   }
 
   // ═══ HERO ANIMATIONS ═══
@@ -149,17 +280,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ═══ SCROLL-TRIGGERED ANIMATIONS ═══
 
-  // Helper function for creating triggers
-  const createTrigger = (element, animation, containerAnim = horizontalScroll) => {
+  // Helper function for creating triggers (adapts to mobile/desktop)
+  const createTrigger = (element, animation) => {
     if (!element) return;
 
-    ScrollTrigger.create({
-      trigger: element,
-      containerAnimation: containerAnim,
-      start: 'left 60%',
-      onEnter: animation,
-      once: true
-    });
+    if (isMobileView) {
+      // Mobile: vertical scroll trigger
+      ScrollTrigger.create({
+        trigger: element,
+        start: 'top 75%',
+        onEnter: animation,
+        once: true
+      });
+    } else {
+      // Desktop: horizontal scroll trigger
+      ScrollTrigger.create({
+        trigger: element,
+        containerAnimation: horizontalScroll,
+        start: 'left 60%',
+        onEnter: animation,
+        once: true
+      });
+    }
   };
 
   // Philosophy word reveal
@@ -167,19 +309,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const words = document.querySelectorAll('.philosophy-text .word');
 
   if (philosophyPanel && words.length > 0) {
-    ScrollTrigger.create({
-      trigger: philosophyPanel,
-      containerAnimation: horizontalScroll,
-      start: 'left 80%',
-      end: 'right 20%',
-      onUpdate: (self) => {
-        const progress = self.progress;
-        const wordsToActivate = Math.floor(progress * words.length * 1.5);
-        words.forEach((word, i) => {
-          if (i < wordsToActivate) word.classList.add('active');
-        });
-      }
-    });
+    if (isMobileView) {
+      // Mobile: vertical scroll word reveal
+      ScrollTrigger.create({
+        trigger: philosophyPanel,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const wordsToActivate = Math.floor(progress * words.length * 1.5);
+          words.forEach((word, i) => {
+            if (i < wordsToActivate) word.classList.add('active');
+          });
+        }
+      });
+    } else {
+      // Desktop: horizontal scroll word reveal
+      ScrollTrigger.create({
+        trigger: philosophyPanel,
+        containerAnimation: horizontalScroll,
+        start: 'left 80%',
+        end: 'right 20%',
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const wordsToActivate = Math.floor(progress * words.length * 1.5);
+          words.forEach((word, i) => {
+            if (i < wordsToActivate) word.classList.add('active');
+          });
+        }
+      });
+    }
   }
 
   // Journey chapters
@@ -225,10 +384,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Testimonials
   const testimonialsPanel = document.querySelector('.panel-testimonials');
   const testimonials = document.querySelectorAll('.testimonial');
-  const isMobile = window.innerWidth <= 900;
 
   if (testimonialsPanel && testimonials.length) {
-    if (isMobile) {
+    if (isMobileView) {
       // Swipeable deck cards on mobile
       gsap.set(testimonials, { opacity: 1, y: 0 });
 
@@ -351,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ═══ PARALLAX ═══ (desktop only)
-  if (!isMobile) {
+  if (!isMobileView) {
     panels.forEach((panel) => {
       const content = panel.querySelector('.panel-content');
       if (!content) return;
