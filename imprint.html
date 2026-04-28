@@ -3,206 +3,169 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Imprint — built by charly</title>
+    <title>Imprint — Charlotte Hetzler</title>
     <meta name="robots" content="noindex" />
 
     <!-- Favicon -->
-    <link rel="icon" href="assets/img/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="icon" href="assets/img/favicon.svg?v=3" type="image/svg+xml" />
 
     <!-- Clash Display + Satoshi from Fontshare -->
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/style.css" />
 
     <style>
-      :root {
-        --teal: #145f4b;
-        --teal-light: #1d7a62;
-        --teal-soft: #3d8b78;
-        --periwinkle: #92a0ff;
-        --periwinkle-light: #b3bdff;
-        --cream: #F8F9FC;
-        --cream-dark: #ECEEF5;
-        --display: 'Clash Display', sans-serif;
-        --body: 'Satoshi', -apple-system, sans-serif;
-        --nav-h: 72px;
-      }
+      /* Page-specific overrides — uses the main stylesheet's tokens */
+      body { cursor: auto; overflow-x: hidden; }
+      a, button { cursor: auto; }
 
-      *, *::before, *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: var(--body);
-        background: var(--cream);
-        color: var(--teal-soft);
-        line-height: 1.7;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      /* Nav */
-      .nav {
+      .imprint-nav {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: 0; left: 0; right: 0;
         z-index: 1000;
         height: var(--nav-h);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 40px;
-        background: var(--cream);
+        padding: 0 var(--gutter);
+        background: rgba(244, 242, 236, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
       }
 
-      .nav-logo {
+      .imprint-nav .nav-logo {
         font-family: var(--display);
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 500;
-        letter-spacing: -0.01em;
+        letter-spacing: -0.005em;
         color: var(--teal);
         line-height: 1.1;
-        transition: color 0.3s;
+        transition: opacity 0.2s;
       }
+      .imprint-nav .nav-logo:hover { opacity: 0.7; }
+      .imprint-nav .nav-logo-dot { color: var(--periwinkle); }
 
-      .nav-logo:hover {
-        color: var(--periwinkle);
-      }
-
-      .nav-logo-prefix {
-        font-family: var(--body);
-        font-size: 0.65rem;
-        font-weight: 400;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        opacity: 0.7;
-      }
-
-      .nav-logo-dot {
-        color: var(--periwinkle);
-      }
-
-      .nav-back {
+      .imprint-nav .nav-back {
         font-family: var(--display);
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         font-weight: 500;
         letter-spacing: 0.02em;
         color: var(--teal);
-        padding: 12px 24px;
+        padding: 11px 22px;
         background: var(--periwinkle);
-        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 2px;
+        transition: transform 0.3s var(--ease), box-shadow 0.3s, background 0.3s;
+      }
+      .imprint-nav .nav-back:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px var(--periwinkle-glow);
+        background: var(--periwinkle-light);
       }
 
-      .nav-back:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(146, 160, 255, 0.25);
-      }
-
-      /* Content */
       .imprint {
-        padding: calc(var(--nav-h) + 80px) 40px 120px;
+        padding: calc(var(--nav-h) + 80px) var(--gutter) 80px;
         max-width: 720px;
         margin: 0 auto;
       }
 
+      .imprint-eyebrow {
+        font-family: var(--body);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-bottom: 18px;
+      }
+
       .imprint h1 {
         font-family: var(--display);
-        font-size: clamp(2.4rem, 5vw, 3.5rem);
-        font-weight: 400;
-        letter-spacing: -0.02em;
+        font-size: clamp(2.4rem, 5vw, 3.6rem);
+        font-weight: 500;
+        letter-spacing: -0.025em;
         color: var(--teal);
-        margin-bottom: 48px;
+        margin-bottom: 56px;
+        line-height: 1.05;
       }
+      .imprint h1 .dot { color: var(--periwinkle); }
 
       .imprint h2 {
         font-family: var(--display);
-        font-size: 1.3rem;
+        font-size: 1.15rem;
         font-weight: 500;
         color: var(--teal);
-        margin-top: 48px;
-        margin-bottom: 16px;
+        margin-top: 44px;
+        margin-bottom: 14px;
+        letter-spacing: -0.005em;
       }
 
       .imprint p {
         font-size: 1rem;
-        color: var(--teal-soft);
+        color: var(--text-body);
         line-height: 1.8;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
       }
 
       .imprint a {
-        color: var(--periwinkle);
-        border-bottom: 1px solid var(--periwinkle-light);
-        transition: border-color 0.3s;
+        color: var(--teal);
+        border-bottom: 1px solid var(--periwinkle);
+        transition: color 0.3s, border-color 0.3s;
       }
-
       .imprint a:hover {
-        border-color: var(--periwinkle);
+        color: var(--periwinkle);
+        border-color: var(--teal);
       }
 
       .imprint hr {
         border: none;
-        height: 2px;
-        background: var(--cream-dark);
-        margin: 48px 0;
+        height: 1px;
+        background: var(--cream-warm);
+        margin: 56px 0;
       }
 
-      /* Footer */
-      footer {
-        padding: 32px 40px;
-        background: var(--teal);
-        color: rgba(248, 249, 252, 0.6);
+      .imprint-footer {
+        padding: 28px var(--gutter);
+        background: var(--cream-warm);
+        color: var(--text-soft);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
+        font-family: var(--display);
+        letter-spacing: 0.04em;
       }
 
-      .footer-links {
+      .imprint-footer-links {
         display: flex;
-        gap: 24px;
+        gap: 28px;
       }
 
-      .footer-links a {
-        color: rgba(248, 249, 252, 0.6);
+      .imprint-footer-links a {
+        color: var(--text-soft);
         transition: color 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.72rem;
       }
-
-      .footer-links a:hover {
-        color: var(--periwinkle-light);
-      }
+      .imprint-footer-links a:hover { color: var(--teal); }
 
       @media (max-width: 600px) {
-        .nav {
-          padding: 0 24px;
-        }
-
-        .imprint {
-          padding: calc(var(--nav-h) + 60px) 24px 80px;
-        }
-
-        footer {
+        .imprint-footer {
           flex-direction: column;
-          gap: 16px;
+          gap: 14px;
           text-align: center;
-          padding: 24px;
         }
       }
     </style>
   </head>
   <body>
-    <nav class="nav">
-      <a href="/" class="nav-logo"><span class="nav-logo-prefix">built by</span><br>charly<span class="nav-logo-dot">.</span></a>
+    <nav class="imprint-nav">
+      <a href="/" class="nav-logo">Charlotte Hetzler<span class="nav-logo-dot">.</span></a>
       <a href="/" class="nav-back">Back to home</a>
     </nav>
 
     <div class="imprint">
-      <h1>Imprint</h1>
+      <p class="imprint-eyebrow">The legal bit</p>
+      <h1>Imprint<span class="dot">.</span></h1>
 
       <h2>Information according to § 5 TMG</h2>
       <p>Charlotte Hetzler</p>
@@ -211,39 +174,25 @@
       <p>Germany</p>
 
       <h2>Contact</h2>
-      <p>
-        Email:
-        <a href="mailto:hello@builtbycharly.com">hello@builtbycharly.com</a>
-      </p>
+      <p>Email: <a href="mailto:hello@charlottehetzler.com">hello@charlottehetzler.com</a></p>
 
       <h2>Sales tax ID</h2>
-      <p>
-        Sales tax identification number according to § 27 a Umsatzsteuergesetz:
-        DE342076779
-      </p>
+      <p>Sales tax identification number according to § 27 a Umsatzsteuergesetz: DE342076779</p>
 
       <hr />
 
       <h2>Disclaimer</h2>
-      <p>
-        Despite careful control of the content, I assume no liability for the
-        content of external links. The operators of the linked pages are solely
-        responsible for their content.
-      </p>
+      <p>Despite careful control of the content, I assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content.</p>
 
       <h2>Copyright</h2>
-      <p>
-        The content and works created on these pages are subject to German
-        copyright law. Duplication, processing, distribution, and any kind of
-        use beyond the limits of copyright law require written consent.
-      </p>
+      <p>The content and works created on these pages are subject to German copyright law. Duplication, processing, distribution, and any kind of use beyond the limits of copyright law require written consent.</p>
     </div>
 
-    <footer>
+    <footer class="imprint-footer">
       <span>&copy; 2026 Charlotte Hetzler</span>
-      <div class="footer-links">
-        <a href="https://www.linkedin.com/in/charlottehetzler/" target="_blank">LinkedIn</a>
-        <a href="mailto:hello@builtbycharly.com">Email</a>
+      <div class="imprint-footer-links">
+        <a href="https://www.linkedin.com/in/charlottehetzler/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:hello@charlottehetzler.com">Email</a>
       </div>
     </footer>
   </body>

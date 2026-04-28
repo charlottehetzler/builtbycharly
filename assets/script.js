@@ -1,31 +1,28 @@
 /* ═══════════════════════════════════════
-   BUILT BY CHARLY — Portfolio Experience
-   Desktop: Horizontal Scroll
-   Mobile: Vertical Snap + Magnetic Parallax
-   GSAP + ScrollTrigger magic
+   CHARLOTTE HETZLER — Portfolio
+   Vertical scroll · IntersectionObserver
+   No external dependencies
    ═══════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  gsap.registerPlugin(ScrollTrigger);
-
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isFinePointer = window.matchMedia('(pointer: fine)').matches;
 
-  // Show everything immediately if reduced motion
+  // ═══ REDUCED MOTION FALLBACK ═══
   if (prefersReducedMotion) {
-    document.querySelectorAll('.hero-intro, .hero-name .char, .hero-tagline, .hero-portrait, .chapter, .project-card, .testimonial, .about-image, .about-text, .panel-contact h2, .contact-details, .contact-email, .contact-links, .copyright').forEach(el => {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-    });
-    document.querySelectorAll('.philosophy-text .word').forEach(el => el.classList.add('active'));
+    document.querySelectorAll('[data-reveal], [data-reveal-stagger], .hero-intro, .hero-name .name-line, .hero-tagline, .hero-credential, .hero-portrait')
+      .forEach(el => el.classList.add('is-revealed'));
+    initCurrently();
+    initNavScrollState();
     return;
   }
 
   // ═══ CUSTOM CURSOR ═══
   const cursor = document.querySelector('.cursor');
-  const cursorDot = document.querySelector('.cursor-dot');
-  const cursorRing = document.querySelector('.cursor-ring');
+  const cursorDot = cursor?.querySelector('.cursor-dot');
+  const cursorRing = cursor?.querySelector('.cursor-ring');
 
-  if (cursor && window.matchMedia('(pointer: fine)').matches) {
+  if (cursor && isFinePointer) {
     let mouseX = 0, mouseY = 0;
     let dotX = 0, dotY = 0;
     let ringX = 0, ringY = 0;
@@ -36,13 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function animateCursor() {
-      dotX += (mouseX - dotX) * 0.2;
-      dotY += (mouseY - dotY) * 0.2;
+      dotX += (mouseX - dotX) * 0.22;
+      dotY += (mouseY - dotY) * 0.22;
       cursorDot.style.left = dotX + 'px';
       cursorDot.style.top = dotY + 'px';
 
-      ringX += (mouseX - ringX) * 0.1;
-      ringY += (mouseY - ringY) * 0.1;
+      ringX += (mouseX - ringX) * 0.11;
+      ringY += (mouseY - ringY) * 0.11;
       cursorRing.style.left = ringX + 'px';
       cursorRing.style.top = ringY + 'px';
 
@@ -50,504 +47,201 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     animateCursor();
 
-    // Hover states
-    const hoverables = document.querySelectorAll('a, button, .project-card, .testimonial');
+    const hoverables = document.querySelectorAll('a, button, .project-card, .webflow-card, .testimonial');
     hoverables.forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
     });
-
-    // Track dark sections for cursor color
-    const darkPanels = document.querySelectorAll('.panel-hero, .panel-work, .panel-contact');
-    const updateCursorColor = () => {
-      let onDark = false;
-      darkPanels.forEach(panel => {
-        const rect = panel.getBoundingClientRect();
-        if (mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom) {
-          onDark = true;
-        }
-      });
-      cursor.classList.toggle('on-dark', onDark);
-    };
-    document.addEventListener('mousemove', updateCursorColor);
   }
 
-  // ═══ NAV COLOR CHANGE ═══
+  // ═══ NAV: dark/light state + scrolled state ═══
   const nav = document.querySelector('.nav');
-  const updateNavColor = () => {
-    if (!nav) return;
-    const darkPanels = document.querySelectorAll('.panel-hero, .panel-work, .panel-contact');
-    let onDark = false;
-    const isMobileNav = window.innerWidth <= 900;
+  const currentlyEl = document.querySelector('.currently');
+  const darkPanels = document.querySelectorAll('.panel-philosophy, .panel-work, .panel-contact');
 
+  const updateNavOnDark = () => {
+    if (!nav) return;
+    let onDark = false;
     darkPanels.forEach(panel => {
       const rect = panel.getBoundingClientRect();
-      if (isMobileNav) {
-        // Mobile: Check vertical position (panel top is near viewport top)
-        if (rect.top <= 100 && rect.bottom > 100) {
-          onDark = true;
-        }
-      } else {
-        // Desktop: Check horizontal position
-        if (rect.left < 200 && rect.right > 0) {
-          onDark = true;
-        }
-      }
+      if (rect.top <= 80 && rect.bottom > 80) onDark = true;
     });
-
     nav.classList.toggle('on-dark', onDark);
+
+    if (currentlyEl) {
+      let currentlyOnDark = false;
+      darkPanels.forEach(panel => {
+        const rect = panel.getBoundingClientRect();
+        const widgetY = window.innerHeight - 40;
+        if (rect.top <= widgetY && rect.bottom >= widgetY) currentlyOnDark = true;
+      });
+      currentlyEl.classList.toggle('on-dark', currentlyOnDark);
+    }
   };
 
-  // Initial nav color check
-  updateNavColor();
-
-  // ═══ HORIZONTAL SCROLL (Desktop only) ═══
-  const wrapper = document.querySelector('.horizontal-wrapper');
-  const track = document.querySelector('.horizontal-track');
-  const panels = document.querySelectorAll('.panel');
-  const isMobileView = window.innerWidth <= 900;
-
-  if (!wrapper || !track || panels.length === 0) return;
-
-  let horizontalScroll = null;
-
-  if (!isMobileView) {
-    // Desktop: Horizontal scroll
-    const getTotalWidth = () => {
-      let width = 0;
-      panels.forEach(panel => width += panel.offsetWidth);
-      return width;
+  function initNavScrollState() {
+    const onScroll = () => {
+      if (!nav) return;
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+      updateNavOnDark();
     };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+  initNavScrollState();
 
-    horizontalScroll = gsap.to(track, {
-      x: () => -(getTotalWidth() - window.innerWidth),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: wrapper,
-        start: 'top top',
-        end: () => '+=' + (getTotalWidth() - window.innerWidth),
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        anticipatePin: 1,
-        onUpdate: updateNavColor
-      }
-    });
+  // ═══ PROGRESS BAR ═══
+  const progressBar = document.querySelector('.progress-bar');
+  if (progressBar) {
+    const updateProgress = () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? window.scrollY / docHeight : 0;
+      progressBar.style.width = (progress * 100) + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
 
-    // Progress bar (desktop)
-    const progressBar = document.querySelector('.progress-bar');
-    if (progressBar) {
-      ScrollTrigger.create({
-        trigger: wrapper,
-        start: 'top top',
-        end: () => '+=' + (getTotalWidth() - window.innerWidth),
-        onUpdate: (self) => {
-          gsap.set(progressBar, { width: (self.progress * 100) + '%' });
-        }
+  // ═══ HERO ENTRANCE ═══
+  setTimeout(() => {
+    document.querySelector('.hero-intro')?.classList.add('is-revealed');
+  }, 250);
+
+  const heroLines = document.querySelectorAll('.hero-name .name-line');
+  heroLines.forEach((line, i) => {
+    setTimeout(() => line.classList.add('is-revealed'), 450 + i * 130);
+  });
+
+  setTimeout(() => {
+    document.querySelector('.hero-portrait')?.classList.add('is-revealed');
+  }, 600);
+
+  setTimeout(() => {
+    document.querySelector('.hero-tagline')?.classList.add('is-revealed');
+  }, 850);
+
+  setTimeout(() => {
+    document.querySelector('.hero-credential')?.classList.add('is-revealed');
+  }, 1000);
+
+  // ═══ SCROLL-TRIGGERED REVEALS ═══
+  const reveals = document.querySelectorAll('[data-reveal]');
+  const groups = document.querySelectorAll('[data-reveal-group]');
+
+  if ('IntersectionObserver' in window) {
+    if (reveals.length) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -6% 0px'
       });
+      reveals.forEach(el => io.observe(el));
+    }
+
+    if (groups.length) {
+      const groupIo = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const children = entry.target.querySelectorAll('[data-reveal-stagger]');
+            children.forEach((child, i) => {
+              setTimeout(() => child.classList.add('is-revealed'), i * 110);
+            });
+            groupIo.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -6% 0px'
+      });
+      groups.forEach(el => groupIo.observe(el));
     }
   } else {
-    // Mobile: Vertical scroll with magnetic parallax
+    // Fallback: show everything
+    reveals.forEach(el => el.classList.add('is-revealed'));
+    document.querySelectorAll('[data-reveal-stagger]').forEach(el => el.classList.add('is-revealed'));
+  }
 
-    // Progress bar (mobile - based on scroll position)
-    const progressBar = document.querySelector('.progress-bar');
-    if (progressBar) {
-      window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = scrollTop / docHeight;
-        gsap.set(progressBar, { width: (progress * 100) + '%' });
-      }, { passive: true });
+  // ═══ "CURRENTLY" WIDGET ═══
+  initCurrently();
+
+  function initCurrently() {
+    const widget = document.querySelector('.currently');
+    if (!widget) return;
+
+    const btn = widget.querySelector('.currently-btn');
+    const textEl = widget.querySelector('.currently-text');
+    const detail = widget.querySelector('.currently-detail');
+
+    const schedule = [
+      { from: 5,  to: 7,  text: 'surfing or pretending to' },
+      { from: 7,  to: 9,  text: 'on the second coffee' },
+      { from: 9,  to: 13, text: 'deep work — please don\'t ping' },
+      { from: 13, to: 14, text: 'lunch and a walk' },
+      { from: 14, to: 18, text: 'shipping things' },
+      { from: 18, to: 22, text: 'mentoring or Berlin overlap' },
+      { from: 22, to: 29, text: 'asleep, mostly' }
+    ];
+
+    function getCurrentText() {
+      let sydneyHour;
+      try {
+        const fmt = new Intl.DateTimeFormat('en-AU', {
+          timeZone: 'Australia/Sydney',
+          hour: 'numeric',
+          hour12: false
+        });
+        sydneyHour = parseInt(fmt.format(new Date()), 10);
+        if (Number.isNaN(sydneyHour)) sydneyHour = new Date().getHours();
+      } catch (e) {
+        sydneyHour = new Date().getHours();
+      }
+
+      const checkHour = sydneyHour < 5 ? sydneyHour + 24 : sydneyHour;
+      const slot = schedule.find(s => checkHour >= s.from && checkHour < s.to);
+      return slot ? slot.text : 'building something';
     }
 
-    // Update nav color on scroll for mobile
-    window.addEventListener('scroll', updateNavColor, { passive: true });
+    function update() {
+      if (textEl) textEl.textContent = getCurrentText();
+    }
 
-    // ═══ MAGNETIC PARALLAX (Touch + Gyroscope) ═══
-    let currentPanel = null;
-    let tiltX = 0, tiltY = 0;
-    let touchX = 0.5, touchY = 0.5; // Normalized 0-1
+    update();
+    setInterval(update, 60 * 1000);
 
-    // Find which panel is currently in view
-    const updateCurrentPanel = () => {
-      panels.forEach(panel => {
-        const rect = panel.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.5) {
-          currentPanel = panel;
+    if (!btn) return;
+
+    let open = false;
+    const setOpen = (val) => {
+      open = val;
+      btn.setAttribute('aria-expanded', String(val));
+      if (detail) {
+        if (val) {
+          detail.hidden = false;
+          requestAnimationFrame(() => detail.setAttribute('data-open', 'true'));
+        } else {
+          detail.setAttribute('data-open', 'false');
+          setTimeout(() => { if (!open) detail.hidden = true; }, 300);
         }
-      });
+      }
     };
 
-    window.addEventListener('scroll', updateCurrentPanel, { passive: true });
-    updateCurrentPanel();
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setOpen(!open);
+    });
 
-    // Apply tilt effect to current panel
-    const applyTilt = () => {
-      if (!currentPanel) return;
+    document.addEventListener('click', (e) => {
+      if (open && !widget.contains(e.target)) setOpen(false);
+    });
 
-      const content = currentPanel.querySelector('.panel-content');
-      if (!content) return;
-
-      // Combine touch and gyro inputs
-      const maxTilt = 8; // degrees
-      const rotateX = (touchY - 0.5) * maxTilt + tiltY;
-      const rotateY = (touchX - 0.5) * -maxTilt + tiltX;
-
-      gsap.to(content, {
-        rotateX: rotateX,
-        rotateY: rotateY,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-
-      // Move child elements at different depths
-      const deepElements = currentPanel.querySelectorAll('h2, .hero-name, .philosophy-text');
-      const midElements = currentPanel.querySelectorAll('p, .chapter, .testimonial');
-      const frontElements = currentPanel.querySelectorAll('img, .project-card, .webflow-card, .contact-email');
-
-      const moveAmount = 15;
-
-      deepElements.forEach(el => {
-        gsap.to(el, {
-          x: (touchX - 0.5) * moveAmount * 0.5,
-          y: (touchY - 0.5) * moveAmount * 0.5,
-          duration: 0.4,
-          ease: 'power2.out'
-        });
-      });
-
-      midElements.forEach(el => {
-        gsap.to(el, {
-          x: (touchX - 0.5) * moveAmount,
-          y: (touchY - 0.5) * moveAmount,
-          duration: 0.35,
-          ease: 'power2.out'
-        });
-      });
-
-      frontElements.forEach(el => {
-        gsap.to(el, {
-          x: (touchX - 0.5) * moveAmount * 1.8,
-          y: (touchY - 0.5) * moveAmount * 1.8,
-          duration: 0.25,
-          ease: 'power2.out'
-        });
-      });
-    };
-
-    // Touch tracking
-    document.addEventListener('touchmove', (e) => {
-      const touch = e.touches[0];
-      touchX = touch.clientX / window.innerWidth;
-      touchY = touch.clientY / window.innerHeight;
-      applyTilt();
-    }, { passive: true });
-
-    document.addEventListener('touchend', () => {
-      // Smoothly reset to center
-      touchX = 0.5;
-      touchY = 0.5;
-      applyTilt();
-    }, { passive: true });
-
-    // Gyroscope/Device orientation (if available)
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener('deviceorientation', (e) => {
-        if (e.gamma !== null && e.beta !== null) {
-          // gamma: left-right tilt (-90 to 90)
-          // beta: front-back tilt (-180 to 180)
-          tiltX = Math.max(-15, Math.min(15, e.gamma)) / 15 * 5;
-          tiltY = Math.max(-15, Math.min(15, e.beta - 45)) / 15 * 5; // -45 for natural holding angle
-          applyTilt();
-        }
-      }, { passive: true });
-    }
-  }
-
-  // ═══ HERO ANIMATIONS ═══
-  const heroIntro = document.querySelector('.hero-intro');
-  const heroChars = document.querySelectorAll('.hero-name .char');
-  const heroTagline = document.querySelector('.hero-tagline');
-  const heroPortrait = document.querySelector('.hero-portrait');
-
-  const heroTl = gsap.timeline({ delay: 0.3 });
-
-  heroTl
-    .to(heroIntro, { opacity: 1, duration: 0.8, ease: 'power2.out' })
-    .to(heroChars, { opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out' }, '-=0.4')
-    .to(heroTagline, { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.3')
-    .to(heroPortrait, { opacity: 1, x: 0, duration: 1, ease: 'power3.out' }, '-=0.6');
-
-  // ═══ SCROLL-TRIGGERED ANIMATIONS ═══
-
-  // Helper function for creating triggers (adapts to mobile/desktop)
-  const createTrigger = (element, animation) => {
-    if (!element) return;
-
-    if (isMobileView) {
-      // Mobile: vertical scroll trigger
-      ScrollTrigger.create({
-        trigger: element,
-        start: 'top 75%',
-        onEnter: animation,
-        once: true
-      });
-    } else {
-      // Desktop: horizontal scroll trigger
-      ScrollTrigger.create({
-        trigger: element,
-        containerAnimation: horizontalScroll,
-        start: 'left 60%',
-        onEnter: animation,
-        once: true
-      });
-    }
-  };
-
-  // Philosophy word reveal
-  const philosophyPanel = document.querySelector('.panel-philosophy');
-  const words = document.querySelectorAll('.philosophy-text .word');
-
-  if (philosophyPanel && words.length > 0) {
-    if (isMobileView) {
-      // Mobile: vertical scroll word reveal
-      ScrollTrigger.create({
-        trigger: philosophyPanel,
-        start: 'top 80%',
-        end: 'bottom 20%',
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const wordsToActivate = Math.floor(progress * words.length * 1.5);
-          words.forEach((word, i) => {
-            if (i < wordsToActivate) word.classList.add('active');
-          });
-        }
-      });
-    } else {
-      // Desktop: horizontal scroll word reveal
-      ScrollTrigger.create({
-        trigger: philosophyPanel,
-        containerAnimation: horizontalScroll,
-        start: 'left 80%',
-        end: 'right 20%',
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const wordsToActivate = Math.floor(progress * words.length * 1.5);
-          words.forEach((word, i) => {
-            if (i < wordsToActivate) word.classList.add('active');
-          });
-        }
-      });
-    }
-  }
-
-  // Journey chapters
-  const journeyPanel = document.querySelector('.panel-journey');
-  const chapters = document.querySelectorAll('.chapter');
-  if (journeyPanel && chapters.length) {
-    createTrigger(journeyPanel, () => {
-      gsap.to(chapters, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && open) setOpen(false);
     });
   }
-
-  // Brands
-  const brandsPanel = document.querySelector('.panel-brands');
-  const brandLogos = document.querySelectorAll('.brands-grid img');
-  if (brandsPanel && brandLogos.length) {
-    // Set initial state
-    gsap.set(brandLogos, { opacity: 0, y: 20 });
-    createTrigger(brandsPanel, () => {
-      gsap.to(brandLogos, { opacity: 0.6, y: 0, duration: 0.6, stagger: 0.05, ease: 'power3.out' });
-    });
-  }
-
-  // Projects (Software Engineering)
-  const workPanel = document.querySelector('.panel-work');
-  const projectCards = document.querySelectorAll('.project-card');
-  if (workPanel && projectCards.length) {
-    createTrigger(workPanel, () => {
-      gsap.to(projectCards, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out' });
-    });
-  }
-
-  // Webflow Projects
-  const webflowPanel = document.querySelector('.panel-webflow');
-  const webflowCards = document.querySelectorAll('.webflow-card');
-  if (webflowPanel && webflowCards.length) {
-    // Set initial state
-    gsap.set(webflowCards, { opacity: 0, y: 30 });
-    createTrigger(webflowPanel, () => {
-      gsap.to(webflowCards, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out' });
-    });
-  }
-
-  // Testimonials
-  const testimonialsPanel = document.querySelector('.panel-testimonials');
-  const testimonials = document.querySelectorAll('.testimonial');
-
-  if (testimonialsPanel && testimonials.length) {
-    if (isMobileView) {
-      // Swipeable deck cards on mobile
-      gsap.set(testimonials, { opacity: 1, y: 0 });
-
-      let currentCard = 0;
-      const totalCards = testimonials.length;
-
-      const updateCardStack = () => {
-        testimonials.forEach((card, i) => {
-          const offset = (i - currentCard + totalCards) % totalCards;
-          const rotation = [-1, 2, -2, 1][offset] || 0;
-          const yOffset = offset * 8;
-          const zIndex = totalCards - offset;
-
-          gsap.to(card, {
-            rotation: rotation,
-            y: yOffset,
-            zIndex: zIndex,
-            duration: 0.4,
-            ease: 'power2.out'
-          });
-        });
-      };
-
-      // Touch swipe handling
-      testimonials.forEach((card, index) => {
-        let startX = 0;
-        let currentX = 0;
-        let isDragging = false;
-
-        card.addEventListener('touchstart', (e) => {
-          if (index !== currentCard) return;
-          startX = e.touches[0].clientX;
-          isDragging = true;
-        }, { passive: true });
-
-        card.addEventListener('touchmove', (e) => {
-          if (!isDragging || index !== currentCard) return;
-          currentX = e.touches[0].clientX - startX;
-          gsap.set(card, { x: currentX, rotation: currentX * 0.05 });
-        }, { passive: true });
-
-        card.addEventListener('touchend', () => {
-          if (!isDragging || index !== currentCard) return;
-          isDragging = false;
-
-          if (Math.abs(currentX) > 80) {
-            // Swipe out
-            gsap.to(card, {
-              x: currentX > 0 ? 400 : -400,
-              rotation: currentX > 0 ? 20 : -20,
-              opacity: 0,
-              duration: 0.3,
-              onComplete: () => {
-                gsap.set(card, { x: 0, rotation: 0, opacity: 1 });
-                currentCard = (currentCard + 1) % totalCards;
-                updateCardStack();
-              }
-            });
-          } else {
-            // Snap back
-            gsap.to(card, { x: 0, rotation: -1, duration: 0.3 });
-          }
-          currentX = 0;
-        });
-
-        // Click to cycle on mobile
-        card.addEventListener('click', () => {
-          if (index !== currentCard) return;
-          gsap.to(card, {
-            x: -400,
-            rotation: -20,
-            opacity: 0,
-            duration: 0.3,
-            onComplete: () => {
-              gsap.set(card, { x: 0, rotation: 0, opacity: 1 });
-              currentCard = (currentCard + 1) % totalCards;
-              updateCardStack();
-            }
-          });
-        });
-      });
-
-      updateCardStack();
-    } else {
-      // Desktop grid animation
-      createTrigger(testimonialsPanel, () => {
-        gsap.to(testimonials, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out' });
-      });
-    }
-  }
-
-  // About
-  const aboutPanel = document.querySelector('.panel-about');
-  const aboutImage = document.querySelector('.about-image');
-  const aboutText = document.querySelector('.about-text');
-  if (aboutPanel && aboutImage && aboutText) {
-    createTrigger(aboutPanel, () => {
-      gsap.to(aboutImage, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' });
-      gsap.to(aboutText, { opacity: 1, x: 0, duration: 0.9, delay: 0.15, ease: 'power3.out' });
-    });
-  }
-
-  // Contact
-  const contactPanel = document.querySelector('.panel-contact');
-  if (contactPanel) {
-    const contactH2 = contactPanel.querySelector('h2');
-    const contactDetails = contactPanel.querySelector('.contact-details');
-    const contactEmail = contactPanel.querySelector('.contact-email');
-    const contactLinks = contactPanel.querySelector('.contact-links');
-    const copyright = contactPanel.querySelector('.copyright');
-
-    createTrigger(contactPanel, () => {
-      const tl = gsap.timeline();
-      tl.to(contactH2, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
-        .to(contactDetails, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-        .to(contactEmail, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-        .to(contactLinks, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3')
-        .to(copyright, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
-    });
-  }
-
-  // ═══ PARALLAX ═══ (desktop only)
-  if (!isMobileView) {
-    panels.forEach((panel) => {
-      const content = panel.querySelector('.panel-content');
-      if (!content) return;
-
-      gsap.to(content, {
-        x: -30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: panel,
-          containerAnimation: horizontalScroll,
-          start: 'left right',
-          end: 'right left',
-          scrub: true
-        }
-      });
-    });
-  }
-
-  // ═══ KEYBOARD NAVIGATION ═══
-  document.addEventListener('keydown', (e) => {
-    const scrollAmount = window.innerWidth * 0.8;
-
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      e.preventDefault();
-      window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      window.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
-    }
-  });
-
-  // ═══ RESIZE HANDLER ═══
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 250);
-  });
 });
-
