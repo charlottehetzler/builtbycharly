@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  const isFinePointer = window.matchMedia("(pointer: fine)").matches;
 
   // ═══ REDUCED MOTION FALLBACK ═══
   if (prefersReducedMotion) {
