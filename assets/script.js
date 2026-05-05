@@ -22,50 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // ═══ CUSTOM CURSOR ═══
-  const cursor = document.querySelector(".cursor");
-  const cursorDot = cursor?.querySelector(".cursor-dot");
-  const cursorRing = cursor?.querySelector(".cursor-ring");
-
-  if (cursor && isFinePointer) {
-    let mouseX = 0,
-      mouseY = 0;
-    let dotX = 0,
-      dotY = 0;
-    let ringX = 0,
-      ringY = 0;
-
-    document.addEventListener("mousemove", (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    function animateCursor() {
-      dotX += (mouseX - dotX) * 0.22;
-      dotY += (mouseY - dotY) * 0.22;
-      cursorDot.style.left = dotX + "px";
-      cursorDot.style.top = dotY + "px";
-
-      ringX += (mouseX - ringX) * 0.11;
-      ringY += (mouseY - ringY) * 0.11;
-      cursorRing.style.left = ringX + "px";
-      cursorRing.style.top = ringY + "px";
-
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    const hoverables = document.querySelectorAll(
-      "a, button, .project-card, .webflow-card, .testimonial",
-    );
-    hoverables.forEach((el) => {
-      el.addEventListener("mouseenter", () => cursor.classList.add("hovering"));
-      el.addEventListener("mouseleave", () =>
-        cursor.classList.remove("hovering"),
-      );
-    });
-  }
-
   // ═══ NAV: dark/light state + scrolled state ═══
   const nav = document.querySelector(".nav");
   const currentlyEl = document.querySelector(".currently");
