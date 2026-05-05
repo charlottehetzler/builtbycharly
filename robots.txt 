@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /imprint
+Disallow: /imprint.html
+
+Sitemap: https://charlottehetzler.com/sitemap.xml
